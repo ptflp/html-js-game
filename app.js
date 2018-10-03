@@ -316,5 +316,5 @@ function reset() {
     enemies = [];
     bullets = [];
 
-    player.pos = [50, canvas.height / 2];
+    player.pos = [canvas.width/2, canvas.height];
 };
