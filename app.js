@@ -61,7 +61,7 @@ resources.onReady(init);
 // Game state
 var player = {
     pos: [0, 0],
-    sprite: new Sprite('img/sprites.png', [0, 0], [39, 39], 16, [0, 1])
+    sprite: new Sprite('img/sprites.png', [0, 0], [39, 39], 1, [0])
 };
 
 var bullets = [];
@@ -96,8 +96,8 @@ function update(dt) {
         enemies.push({
             pos: [Math.random() * (canvas.width - 39),
                   150],
-            sprite: new Sprite('img/sprites.png', [0, 78], [80, 39],
-                               6, [0, 1, 2, 3, 2, 1])
+            sprite: new Sprite('img/sprites.png', [78, 0], [41, 36],
+                               6, [0, 1, 0])
         });
     }
 
@@ -320,7 +320,6 @@ function gameOver() {
 	if(startGame) {
 	    document.getElementById('game-over').style.display = 'block';
 	    document.getElementById('game-over-overlay').style.display = 'block';
-	    canvasStyle.cursor = 'default';
 	} else {
 	    document.getElementById('game-over').style.display = 'none';
 	    document.getElementById('game-over-overlay').style.display = 'none';
