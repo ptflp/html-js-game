@@ -33,7 +33,8 @@ function main() {
 };
 
 function init() {
-    terrainPattern = ctx.createPattern(resources.get('img/terrain.png'), 'repeat');
+    terrainPattern = ctx.createPattern(resources.get('img/terrain.jpg'), 'repeat');
+    toiletPattern = ctx.createPattern(resources.get('img/toilet.jpg'), 'repeat');
 
     document.getElementById('play-again').addEventListener('click', function() {
         reset();
@@ -51,7 +52,8 @@ function init() {
 
 resources.load([
     'img/sprites.png',
-    'img/terrain.png'
+    'img/terrain.jpg',
+    'img/toilet.jpg'
 ]);
 resources.onReady(init);
 
@@ -70,6 +72,7 @@ var gameTime = 0;
 var isGameOver=true;
 var startGame=false;
 var terrainPattern;
+var toiletPattern;
 
 var score = 0;
 var scoreEl = document.getElementById('score');
@@ -266,6 +269,8 @@ function checkPlayerBounds() {
 function render() {
     ctx.fillStyle = terrainPattern;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = toiletPattern;
+    ctx.fillRect(0, 0, canvas.width, 150);
 
     // Render the player if the game isn't over
     if(!isGameOver) {
