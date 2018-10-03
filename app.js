@@ -179,7 +179,15 @@ function handleInput(dt) {
        Date.now() - lastFire > 100) {
         var x = player.pos[0] + player.sprite.size[0] / 2;
         var y = player.pos[1] + player.sprite.size[1] / 2;
-
+        if (score<5000) {
+        	bulletSpeed=100;
+        }
+        if(score>5000) {
+        	bulletSpeed=200;
+        }
+        if(score>200000) {
+        	bulletSpeed=500;
+        }
         bullets.push({ pos: [x,y],
                        dir: 'up',
                        sprite: new Sprite('img/sprites.png', [0, 50], [9, 5]) });
