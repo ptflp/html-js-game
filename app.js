@@ -99,6 +99,40 @@ function update(dt) {
             sprite: new Sprite('img/sprites.png', [78, 0], [41, 36],
                                6, [0, 1, 0])
         });
+        if (score>200000) {
+	        enemies.push({
+	            pos: [Math.random() * (canvas.width - 39),
+	                  150],
+	            sprite: new Sprite('img/sprites.png', [78, 0], [41, 36],
+	                               6, [0, 1, 0])
+	        });
+	        enemies.push({
+	            pos: [Math.random() * (canvas.width - 39),
+	                  150],
+	            sprite: new Sprite('img/sprites.png', [78, 0], [41, 36],
+	                               6, [0, 1, 0])
+	        });
+        }
+        if (score>390000) {
+	        enemies.push({
+	            pos: [Math.random() * (canvas.width - 39),
+	                  150],
+	            sprite: new Sprite('img/sprites.png', [78, 0], [41, 36],
+	                               6, [0, 1, 0])
+	        });
+	        enemies.push({
+	            pos: [Math.random() * (canvas.width - 39),
+	                  150],
+	            sprite: new Sprite('img/sprites.png', [78, 0], [41, 36],
+	                               6, [0, 1, 0])
+	        });
+	        enemies.push({
+	            pos: [Math.random() * (canvas.width - 39),
+	                  150],
+	            sprite: new Sprite('img/sprites.png', [78, 0], [41, 36],
+	                               6, [0, 1, 0])
+	        });
+        }
     }
 
     checkCollisions();
@@ -147,15 +181,31 @@ function handleInput(dt) {
         var y = player.pos[1] + player.sprite.size[1] / 2;
 
         bullets.push({ pos: [x,y],
-                       dir: 'forward',
-                       // sprite: new Sprite('img/sprites.png', [0, 50], [9, 5]) });
-                       sprite: new Sprite('img/sprites.png', [0, 39], [18, 8]) });
-        bullets.push({ pos: [x,y],
                        dir: 'up',
                        sprite: new Sprite('img/sprites.png', [0, 50], [9, 5]) });
-        bullets.push({ pos: [x,y],
-                       dir: 'left',
-                       sprite: new Sprite('img/sprites.png', [0, 60], [9, 5]) });
+        if (score>13000) {
+	        bullets.push({ pos: [x,y],
+	                       dir: 'left',
+	                       sprite: new Sprite('img/sprites.png', [0, 60], [9, 5]) });
+        }
+        if (score > 60000) {
+        	bullets.push({ pos: [x,y],
+                       dir: 'right',
+                       sprite: new Sprite('img/sprites.png', [0, 39], [18, 8]) });
+        }
+
+        if (score > 150000) {
+        	bullets.push({ pos: [x,y],
+                       dir: 'left-up',
+                       sprite: new Sprite('img/sprites.png', [0, 39], [18, 8]) });
+        }
+
+        if (score > 300000) {
+        	bullets.push({ pos: [x,y],
+                       dir: 'right-up',
+                       sprite: new Sprite('img/sprites.png', [0, 39], [18, 8]) });
+        }
+
 
         lastFire = Date.now();
     }
@@ -172,6 +222,8 @@ function updateEntities(dt) {
         switch(bullet.dir) {
         case 'up': bullet.pos[1] -= bulletSpeed * dt; break;
         case 'left': bullet.pos[0] -= bulletSpeed * dt; break;
+        case 'left-up': bullet.pos[0] -= bulletSpeed * dt;  bullet.pos[1] -= bulletSpeed * dt; break;
+        case 'right-up': bullet.pos[0] += bulletSpeed * dt;  bullet.pos[1] -= bulletSpeed * dt; break;
         default:
             bullet.pos[0] += bulletSpeed * dt;
         }
