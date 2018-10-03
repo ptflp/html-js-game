@@ -38,8 +38,13 @@ function init() {
     document.getElementById('play-again').addEventListener('click', function() {
         reset();
     });
+    document.getElementById('play').addEventListener('click', function() {
+    	startGame = true;
+        reset();
+    });
 
-    reset();
+    // reset();
+    gameOver();
     lastTime = Date.now();
     main();
 }
@@ -63,6 +68,7 @@ var explosions = [];
 var lastFire = Date.now();
 var gameTime = 0;
 var isGameOver=true;
+var startGame=false;
 var terrainPattern;
 
 var score = 0;
@@ -266,9 +272,11 @@ function render() {
         renderEntity(player);
     }
 
-    renderEntities(bullets);
-    renderEntities(enemies);
-    renderEntities(explosions);
+    if(startGame) {
+	    renderEntities(bullets);
+	    renderEntities(enemies);
+	    renderEntities(explosions);
+    }
 };
 
 function renderEntities(list) {
@@ -286,8 +294,13 @@ function renderEntity(entity) {
 
 // Game over
 function gameOver() {
-    document.getElementById('game-over').style.display = 'block';
-    document.getElementById('game-over-overlay').style.display = 'block';
+	if(startGame) {
+	    document.getElementById('game-over').style.display = 'block';
+	    document.getElementById('game-over-overlay').style.display = 'block';
+	} else {
+	    document.getElementById('game-over').style.display = 'none';
+	    document.getElementById('game-over-overlay').style.display = 'none';
+	}
     isGameOver = true;
 }
 
@@ -295,6 +308,7 @@ function gameOver() {
 function reset() {
     document.getElementById('game-over').style.display = 'none';
     document.getElementById('game-over-overlay').style.display = 'none';
+    document.getElementById('game-start').style.display = 'none';
     isGameOver = false;
     gameTime = 0;
     score = 0;
