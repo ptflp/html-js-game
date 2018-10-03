@@ -15,8 +15,8 @@ var requestAnimFrame = (function(){
 // Create the canvas
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
-canvas.width = 512;
-canvas.height = 480;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 document.body.appendChild(canvas);
 
 // The main game loop
@@ -84,8 +84,8 @@ function update(dt) {
     // equation: 1-.993^gameTime
     if(Math.random() < 1 - Math.pow(.993, gameTime)) {
         enemies.push({
-            pos: [canvas.width,
-                  Math.random() * (canvas.height - 39)],
+            pos: [Math.random() * (canvas.width - 39),
+                  0],
             sprite: new Sprite('img/sprites.png', [0, 78], [80, 39],
                                6, [0, 1, 2, 3, 2, 1])
         });
@@ -121,12 +121,13 @@ function handleInput(dt) {
 
         bullets.push({ pos: [x,y],
                        dir: 'forward',
+                       // sprite: new Sprite('img/sprites.png', [0, 50], [9, 5]) });
                        sprite: new Sprite('img/sprites.png', [0, 39], [18, 8]) });
         bullets.push({ pos: [x,y],
                        dir: 'up',
                        sprite: new Sprite('img/sprites.png', [0, 50], [9, 5]) });
         bullets.push({ pos: [x,y],
-                       dir: 'down',
+                       dir: 'left',
                        sprite: new Sprite('img/sprites.png', [0, 60], [9, 5]) });
 
         lastFire = Date.now();
@@ -143,7 +144,7 @@ function updateEntities(dt) {
 
         switch(bullet.dir) {
         case 'up': bullet.pos[1] -= bulletSpeed * dt; break;
-        case 'down': bullet.pos[1] += bulletSpeed * dt; break;
+        case 'left': bullet.pos[0] -= bulletSpeed * dt; break;
         default:
             bullet.pos[0] += bulletSpeed * dt;
         }
@@ -158,11 +159,11 @@ function updateEntities(dt) {
 
     // Update all the enemies
     for(var i=0; i<enemies.length; i++) {
-        enemies[i].pos[0] -= enemySpeed * dt;
+        enemies[i].pos[1] += enemySpeed * dt;
         enemies[i].sprite.update(dt);
 
         // Remove if offscreen
-        if(enemies[i].pos[0] + enemies[i].sprite.size[0] < 0) {
+        if(enemies[i].pos[1] + enemies[i].sprite.size[1] > canvas.height) {
             enemies.splice(i, 1);
             i--;
         }
