@@ -17,6 +17,7 @@ var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+var canvasStyle = canvas.style;
 document.body.appendChild(canvas);
 
 // The main game loop
@@ -94,7 +95,7 @@ function update(dt) {
     if(Math.random() < 1 - Math.pow(.993, gameTime)) {
         enemies.push({
             pos: [Math.random() * (canvas.width - 39),
-                  0],
+                  150],
             sprite: new Sprite('img/sprites.png', [0, 78], [80, 39],
                                6, [0, 1, 2, 3, 2, 1])
         });
@@ -104,6 +105,23 @@ function update(dt) {
 
     scoreEl.innerHTML = score;
 };
+
+
+function getMousePos(canvas, evt) {
+	var rect = canvas.getBoundingClientRect();
+	return {
+	  x: evt.clientX - rect.left,
+	  y: evt.clientY - rect.top
+	};
+}
+
+canvas.addEventListener('mousemove', function(evt) {
+	var mousePos = getMousePos(canvas, evt);
+	var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+	player.pos[0] = mousePos.x;
+	player.pos[1] = mousePos.y;
+	console.log(message);
+}, false);
 
 function handleInput(dt) {
     if(input.isDown('DOWN') || input.isDown('s')) {
@@ -302,10 +320,12 @@ function gameOver() {
 	if(startGame) {
 	    document.getElementById('game-over').style.display = 'block';
 	    document.getElementById('game-over-overlay').style.display = 'block';
+	    canvasStyle.cursor = 'default';
 	} else {
 	    document.getElementById('game-over').style.display = 'none';
 	    document.getElementById('game-over-overlay').style.display = 'none';
 	}
+	canvasStyle.cursor = 'default';
     isGameOver = true;
 }
 
@@ -314,6 +334,7 @@ function reset() {
     document.getElementById('game-over').style.display = 'none';
     document.getElementById('game-over-overlay').style.display = 'none';
     document.getElementById('game-start').style.display = 'none';
+	canvasStyle.cursor = 'none';
     isGameOver = false;
     gameTime = 0;
     score = 0;
