@@ -117,10 +117,10 @@ function getMousePos(canvas, evt) {
 
 canvas.addEventListener('mousemove', function(evt) {
 	var mousePos = getMousePos(canvas, evt);
-	var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
 	player.pos[0] = mousePos.x;
 	player.pos[1] = mousePos.y;
-	console.log(message);
+	// var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+	// console.log(message);
 }, false);
 
 function handleInput(dt) {
@@ -322,7 +322,7 @@ function gameOver() {
 	    document.getElementById('game-over-overlay').style.display = 'block';
 	} else {
 	    document.getElementById('game-over').style.display = 'none';
-	    document.getElementById('game-over-overlay').style.display = 'none';
+	    document.getElementById('game-over-overlay').style.display = 'block';
 	}
 	canvasStyle.cursor = 'default';
     isGameOver = true;
